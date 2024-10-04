@@ -1,21 +1,19 @@
-.SILENT:
-CC = gcc
-CFLAGS = -Werror -Wall -Wextra
+
 NAME = libftprintf.a
-HEADER = libftprintf.h
 
-SRCS = ft_printf.c ft_printf_number_utilities.c \
+SRC = ft_printf.c ft_printf_number_utilities.c \
        ft_printf_handlers.c ft_printf_utilities.c
-
-OBJS = $(SRCS:.c=.o)
 
 all: $(NAME)
 
-$(NAME): $(OBJS)
-	ar rcs $(NAME) $(OBJS)
+CC = gcc
 
-%.o: %.c $(HEADER)
-	$(CC) $(CFLAGS) -c $< -o $@
+CFLAGS = -Wall -Wextra -Werror
+
+OBJS = $(SRC:.c=.o)
+
+$(NAME): $(OBJS)
+	ar rcs ${NAME} ${OBJS}
 
 clean:
 	rm -f $(OBJS)
