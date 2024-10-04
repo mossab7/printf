@@ -1,7 +1,7 @@
 
 #include <stdio.h>
 #include <limits.h>
-#include "libftprintf.h"
+#include "ft_printf.h"
 void	test_simple(void)
 {
 	int	x;
@@ -501,6 +501,20 @@ void	test_bonus_precision(void)
 	printf("Printf = %d, ft_printf = %d\n\n", x, y);
 	x = printf("  Or:\tString, prec 0: [%.0s]\n", "0123456789");
 	y = ft_printf("  Ft:\tString, prec 0: [%.0s]\n", "0123456789");
+	printf("Printf = %d, ft_printf = %d\n\n", x, y);
+
+	printf("\n----------- TEST: PRECISION STRING -----------\n\n");
+	x = printf("  Or:\tString, no prec: [%s]\n", "0123456789");
+	y = ft_printf("  Ft:\tString, no prec: [%s]\n", "0123456789");
+	printf("Printf = %d, ft_printf = %d\n\n", x, y);
+	x = printf("  Or:\tString, prec 6: [%.*s]\n",6, "0123456789");
+	y = ft_printf("  Ft:\tString, prec 6: [%.*s]\n",6, "0123456789");
+	printf("Printf = %d, ft_printf = %d\n\n", x, y);
+	x = printf("  Or:\tString, prec 15: [%.*s]\n",15, "0123456789");
+	y = ft_printf("  Ft:\tString, prec 15: [%.*s]\n",15, "0123456789");
+	printf("Printf = %d, ft_printf = %d\n\n", x, y);
+	x = printf("  Or:\tString, prec 0: [%.*s]\n",0, "0123456789");
+	y = ft_printf("  Ft:\tString, prec 0: [%.*s]\n",0, "0123456789");
 	printf("Printf = %d, ft_printf = %d\n\n", x, y);
 
 	printf("\n----------- TEST: PRECISION INT -----------\n\n");
