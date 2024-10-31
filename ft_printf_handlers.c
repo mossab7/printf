@@ -1,5 +1,5 @@
 #include "ft_printf.h"
-
+#include <stdio.h>
 int handle_string(char *s, t_flags flags) 
 {
     if (!s) 
@@ -8,6 +8,11 @@ int handle_string(char *s, t_flags flags)
         {
           handle_string("(null)",flags);
           return 6;
+        }
+        else if(flags.precision >= 0)
+        {
+            handle_string("",flags);
+            return flags.precision;
         }
        return -1;
     } 
@@ -85,14 +90,17 @@ int handle_flags(const char **format,va_list args,t_flags flags)
         flags.hash = 1;
         return handle_number(((unsigned long)ptr), 16, "0123456789abcdef", flags);
     }
-    else if (**format == '%')
-        return ft_putchar('%');
+    else 
+        return handle_error(format);
     return 0;
 }
 
 int handle_format(const char **format, va_list args) 
 {
-    t_flags flags = {0, -1, 0, 0, 0, 0, 0};
+    t_flags flags;
+    
+    memset(&flags,0,sizeof(flags));
+    flags.precision = -1;
     while (**format == '-' || **format == '0' || **format == '+' || **format == ' ' || **format == '#')
     {
         if (**format == '-') 
@@ -107,20 +115,12 @@ int handle_format(const char **format, va_list args)
           flags.hash = 1;
         (*format)++;
     }
-    if(**format == '*')
+    while (**format >= '0' && **format <= '9') 
     {
-      flags.width = va_arg(args,int);
-      (*format)++;
+        flags.width = flags.width * 10 + (**format - '0');
+        (*format)++;
     }
-    else 
-    {
-      while (**format >= '0' && **format <= '9') 
-      {
-         flags.width = flags.width * 10 + (**format - '0');
-         (*format)++;
-      }
-    }
-    flags = handle_conflict(flags,format,args);
-  return handle_flags(format,args,flags);
+    flags = handle_conflict(flags,format);
+    return handle_flags(format,args,flags);
 }
 

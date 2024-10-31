@@ -39,49 +39,30 @@ int num_pad_len(long n, int base,t_flags flags,int *pad)
     return total_len;
 }
 
-int handle_error(const char *format)
+int handle_error(const char **format)
 {
-    const char *start;
-    int precision;
     int count;
 
-    precision = 0;
     count = 0;
-    start = format;
-    while(*format != '%')
+    if(**format == '%')
+        return (ft_putchar('%'));
+    while(**format != '%')
     {
-        if((*format == '0' && *(format - 1) == '.') || (*format == 's' && *(format - 1) == '%'))
-              precision = 1; 
-        format--;
-    }
-    if(!precision)
-    { 
-        count += ft_putchar(*format++);
-        while(*format && format <= start)
-            count += ft_putchar(*format++);
-        format--;
+        count += ft_putchar(*(*format)++);
     }
     return (count);
 }
 
-t_flags handle_conflict(t_flags flags,const char **format,va_list args)
+t_flags handle_conflict(t_flags flags,const char **format)
 { 
     if (**format == '.')
     {
+        flags.precision = 0;
         (*format)++;
-        if(**format == '*')
+        while (**format >= '0' && **format <= '9')
         {
-            flags.precision = va_arg(args,int);
+            flags.precision = flags.precision * 10 + (**format - '0');
             (*format)++;
-        }
-        else 
-        {
-            flags.precision = 0;
-            while (**format >= '0' && **format <= '9')
-            {
-                flags.precision = flags.precision * 10 + (**format - '0');
-                (*format)++;
-            }
         }
     }
     if(flags.left_align)

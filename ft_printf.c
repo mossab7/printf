@@ -15,16 +15,13 @@ int ft_printf(const char *format, ...)
             format++;
             tmp = count;
             count += handle_format(&format, args);
-            if(tmp == count)
-                count += handle_error(format);
-            else if(tmp > count)
+            if(tmp > count)
                 count++;
         } 
         else 
             count += ft_putchar(*format);
         format++;
     }
-
     va_end(args);
     return count;
 }
