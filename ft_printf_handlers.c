@@ -36,36 +36,82 @@ int handle_character(char c, t_flags flags)
         ft_pad(flags.width - 1, ' ');
     return *(int *)ft_ternary((flags.width > 1), &flags.width, &(int){1});
 }
-
 int handle_number(long n, int base, char *digits, t_flags flags) 
 {
     int total_len;
     int pad;
-
-    total_len = num_pad_len(n,base,flags,&pad);        
+    total_len = num_pad_len(n, base, flags, &pad);        
     if (!flags.left_align && !flags.zero_pad)
         ft_pad(flags.width - total_len, ' ');
+
     if (n < 0) 
         ft_putchar('-');
     else if (flags.sign) 
         ft_putchar('+');
     else if (flags.space) 
         ft_putchar(' ');
+
     if (flags.hash && base == 16 && n != 0)
     {
-        if(digits[10] == 'a')
+        if (digits[10] == 'a')
             ft_putstr("0x");
         else 
             ft_putstr("0X");
     }
+
     if (!flags.left_align && flags.zero_pad )
         ft_pad(flags.width - total_len, '0');
+
+    return handle_number_precision(n, base, digits, flags, total_len, pad);
+}
+
+int handle_number_precision(long n, int base, char *digits, t_flags flags, int total_len, int pad)
+{
+    // Handle precision
+    int precision_len = flags.precision - total_len;
+    if (precision_len > 0) {
+        ft_pad(precision_len, '0');
+        total_len += precision_len;
+    }
+
     ft_pad(pad, '0');
     ft_putnbr(n, base, digits);
+
     if (flags.left_align) 
         ft_pad(flags.width - total_len, ' ');
+
     return *(int *)ft_ternary((flags.width > total_len), &flags.width, &total_len);
 }
+// make this function cleaner and readable
+// int handle_number(long n, int base, char *digits, t_flags flags) 
+// {
+//     int total_len;
+//     int pad;
+
+//     total_len = num_pad_len(n,base,flags,&pad);        
+//     if (!flags.left_align && !flags.zero_pad)
+//         ft_pad(flags.width - total_len, ' ');
+//     if (n < 0) 
+//         ft_putchar('-');
+//     else if (flags.sign) 
+//         ft_putchar('+');
+//     else if (flags.space) 
+//         ft_putchar(' ');
+//     if (flags.hash && base == 16 && n != 0)
+//     {
+//         if(digits[10] == 'a')
+//             ft_putstr("0x");
+//         else 
+//             ft_putstr("0X");
+//     }
+//     if (!flags.left_align && flags.zero_pad )
+//         ft_pad(flags.width - total_len, '0');
+//     ft_pad(pad, '0');
+//     ft_putnbr(n, base, digits);
+//     if (flags.left_align) 
+//         ft_pad(flags.width - total_len, ' ');
+//     return *(int *)ft_ternary((flags.width > total_len), &flags.width, &total_len);
+// }
 
 int handle_flags(const char **format,va_list args,t_flags flags)
 {
