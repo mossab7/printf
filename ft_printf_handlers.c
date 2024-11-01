@@ -12,7 +12,7 @@ int handle_string(char *s, t_flags flags)
         else if(flags.precision >= 0)
         {
             handle_string("",flags);
-            return flags.precision;
+            return flags.width;
         }
        return -1;
     } 
@@ -41,8 +41,8 @@ int handle_number(long n, int base, char *digits, t_flags flags)
 {
     int total_len;
     int pad;
-     
-    total_len = num_pad_len(n,base,flags,&pad);
+
+    total_len = num_pad_len(n,base,flags,&pad);        
     if (!flags.left_align && !flags.zero_pad)
         ft_pad(flags.width - total_len, ' ');
     if (n < 0) 
@@ -58,7 +58,7 @@ int handle_number(long n, int base, char *digits, t_flags flags)
         else 
             ft_putstr("0X");
     }
-    if (!flags.left_align && flags.zero_pad)
+    if (!flags.left_align && flags.zero_pad )
         ft_pad(flags.width - total_len, '0');
     ft_pad(pad, '0');
     ft_putnbr(n, base, digits);

@@ -3,7 +3,7 @@
 int ft_printf(const char *format, ...) 
 {
     int count;
-    int tmp;
+    // int tmp;
     va_list args;
 
     va_start(args, format);
@@ -13,10 +13,10 @@ int ft_printf(const char *format, ...)
         if (*format == '%') 
         {
             format++;
-            tmp = count;
+            // tmp = count;
             count += handle_format(&format, args);
-            if(tmp > count)
-                count++;
+            // if(tmp > count)
+            //     count++;
         } 
         else 
             count += ft_putchar(*format);

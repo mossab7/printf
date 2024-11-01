@@ -5,8 +5,8 @@
 
 int main(int argc, char *argv[])
 {
-  int i = printf("\n[%4.s]\n",NULL);
-  int j = ft_printf("\n[%4.s]\n",NULL);
-  ft_printf("ft_: %d\nor_: %d",i,j);
+  int i = ft_printf("[%.5i]\n", 34);
+  int j = printf("\n[%.5i]\n", 34);
+  printf("ft_: %d\nor_: %d",i,j);
   return 0;
 }
