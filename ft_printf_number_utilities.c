@@ -7,7 +7,7 @@ void	ft_putnbr(unsigned long n, unsigned int base, char *digits)
 	ft_putchar(digits[n % base]);
 }
 
-int	ft_numlen(long n, int base)
+int	ft_numlen(unsigned long n, int base)
 {
 	int	len;
 

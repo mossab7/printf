@@ -22,7 +22,7 @@ int		ft_strlen(const char *s);
 int		ft_putchar(char c);
 void	ft_putstr(char *s);
 void	ft_putnbr(unsigned long n,unsigned  int base, char *digits);
-int		ft_numlen(long n, int base);
+int		ft_numlen(unsigned long n, int base);
 void	ft_pad(int n, char c);
 int 	handle_address(va_list args,t_flags flags);
 int		handle_string(char *s, t_flags flags);

@@ -112,10 +112,12 @@ int handle_address(va_list args,t_flags flags)
 	ft_putnbr(n, 16,"0123456789abcdef");
 	if (flags.left_align)
 		ft_pad(flags.width - total_len, ' ');
-	if (flags.precision == 0 && n == 0)
-		return (flags.width);
-	if (flags.width > total_len)
-		return (flags.width);
+	// if (flags.precision == 0 && n == 0)
+	// 	return (flags.width);
+	// // if (flags.width > total_len)
+	// // 	return (flags.width);
+	// printf("total len :%i\n",total_len);
+	fflush(stdout);
 	return (total_len);
 }
 
