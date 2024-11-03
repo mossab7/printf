@@ -7,8 +7,8 @@ int	main(int argc, char *argv[])
 	int	i;
 	int	j;
 
-	i = ft_printf("[%08.i]\n", 1);
-	j = printf("[%08.i]\n", 1);
+	i = ft_printf("[%p]\n",0);
+	j = printf("[%p]\n", 0);
 	printf("ft_: %d\nor_: %d", i, j);
 	return (0);
 }

@@ -23,6 +23,7 @@ void	ft_putstr(char *s);
 void	ft_putnbr(long n, int base, char *digits);
 int		ft_numlen(long n, int base);
 void	ft_pad(int n, char c);
+int 	handle_address(va_list args,t_flags flags);
 int		handle_string(char *s, t_flags flags);
 int		handle_number_alignment(long n, int base, char *digits, t_flags flags);
 int		handle_character(char c, t_flags flags);
