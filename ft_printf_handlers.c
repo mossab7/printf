@@ -36,83 +36,48 @@ int handle_character(char c, t_flags flags)
         ft_pad(flags.width - 1, ' ');
     return *(int *)ft_ternary((flags.width > 1), &flags.width, &(int){1});
 }
-int handle_number(long n, int base, char *digits, t_flags flags) 
+int handle_number_alignment(long n, int base, char *digits, t_flags flags) 
 {
     int total_len;
     int pad;
-    total_len = num_pad_len(n, base, flags, &pad);        
-    if (!flags.left_align && !flags.zero_pad)
-        ft_pad(flags.width - total_len, ' ');
+    int    precision_len;
 
+    total_len = num_pad_len(n, base, flags, &pad);        
+    if (!flags.left_align && (!flags.zero_pad || ((flags.width > flags.precision) && flags.precision > 0)))
+        ft_pad(flags.width - total_len, ' ');
     if (n < 0) 
         ft_putchar('-');
     else if (flags.sign) 
         ft_putchar('+');
-    else if (flags.space) 
-        ft_putchar(' ');
-
+    else if(flags.space)
+    ft_putchar(' ');
     if (flags.hash && base == 16 && n != 0)
-    {
-        if (digits[10] == 'a')
-            ft_putstr("0x");
-        else 
-            ft_putstr("0X");
-    }
-
-    if (!flags.left_align && flags.zero_pad )
+    ft_putstr((char *)ft_ternary(digits[10] == 'a',"0x","0X"));
+    if (!flags.left_align && flags.zero_pad && flags.precision == -1)
         ft_pad(flags.width - total_len, '0');
-
-    return handle_number_precision(n, base, digits, flags, total_len, pad);
+    else if(!flags.left_align && flags.zero_pad && flags.width - flags.precision < total_len)
+    ft_pad(flags.width - total_len - flags.precision, '0');
+    precision_len = flags.precision - total_len;
+    if(precision_len > 0)
+        ft_pad(precision_len,'0');
+    //total_len += (*(int *)ft_ternary((precision_len > 0),&precision_len,&(int){0}));
+    ft_pad(pad, '0');
+    return (*(int *)ft_ternary((precision_len > 0),&(int){total_len + precision_len},&total_len));
 }
 
-int handle_number_precision(long n, int base, char *digits, t_flags flags, int total_len, int pad)
+int handle_number(long n, int base, char *digits, t_flags flags)
 {
-    // Handle precision
-    int precision_len = flags.precision - total_len;
-    if (precision_len > 0) {
-        ft_pad(precision_len, '0');
-        total_len += precision_len;
-    }
+    int    total_len;
 
-    ft_pad(pad, '0');
-    ft_putnbr(n, base, digits);
-
+    total_len = handle_number_alignment(n,base,digits,flags);
+    if(n != 0 || flags.precision == -1)
+        ft_putnbr(n, base, digits);
     if (flags.left_align) 
         ft_pad(flags.width - total_len, ' ');
-
-    return *(int *)ft_ternary((flags.width > total_len), &flags.width, &total_len);
+    if(flags.precision == 0 && n == 0)
+        return (flags.width);    
+    return (*(int *)ft_ternary((flags.width > total_len), &flags.width, &total_len));
 }
-// make this function cleaner and readable
-// int handle_number(long n, int base, char *digits, t_flags flags) 
-// {
-//     int total_len;
-//     int pad;
-
-//     total_len = num_pad_len(n,base,flags,&pad);        
-//     if (!flags.left_align && !flags.zero_pad)
-//         ft_pad(flags.width - total_len, ' ');
-//     if (n < 0) 
-//         ft_putchar('-');
-//     else if (flags.sign) 
-//         ft_putchar('+');
-//     else if (flags.space) 
-//         ft_putchar(' ');
-//     if (flags.hash && base == 16 && n != 0)
-//     {
-//         if(digits[10] == 'a')
-//             ft_putstr("0x");
-//         else 
-//             ft_putstr("0X");
-//     }
-//     if (!flags.left_align && flags.zero_pad )
-//         ft_pad(flags.width - total_len, '0');
-//     ft_pad(pad, '0');
-//     ft_putnbr(n, base, digits);
-//     if (flags.left_align) 
-//         ft_pad(flags.width - total_len, ' ');
-//     return *(int *)ft_ternary((flags.width > total_len), &flags.width, &total_len);
-// }
-
 int handle_flags(const char **format,va_list args,t_flags flags)
 {
     if (**format == 's')

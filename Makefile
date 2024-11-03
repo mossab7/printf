@@ -14,8 +14,8 @@ OBJS = $(SRC:.c=.o)
 
 $(NAME): $(OBJS)
 	ar rcs ${NAME} ${OBJS}
-
 bonus: all
+
 clean:
 	rm -f $(OBJS)
 

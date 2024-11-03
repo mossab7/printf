@@ -31,6 +31,8 @@ int num_pad_len(long n, int base,t_flags flags,int *pad)
     int total_len;
 
     len = ft_numlen(n, base);
+    if(n == 0 && flags.precision >= 0)
+        len = 0;
     sign = *(int *)ft_ternary((n < 0 || flags.sign || flags.space), &(int){1}, &(int){0});
     prefix = *(int *)ft_ternary((flags.hash && base == 16 && n != 0), &(int){2}, &(int){0});
     *pad = *(int *)ft_ternary((flags.precision > len), &(int){flags.precision - len}, &(int){0});
