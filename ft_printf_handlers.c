@@ -70,7 +70,7 @@ int	handle_width_alignment(long n, int base, char *digits, t_flags flags)
 		if (!flags.zero_pad || ((flags.width > flags.precision) && flags.precision >= 0))
 				ft_pad(flags.width - total_len, ' ');
 	}
-	if (n < 0)
+	if (flags.negative)
 		ft_putchar('-');
 	else if (flags.sign)
 		ft_putchar('+');
@@ -81,17 +81,13 @@ int	handle_width_alignment(long n, int base, char *digits, t_flags flags)
 	return (handle_precision_alignment(total_len, pad, flags));
 }
 
-int	handle_number(long n, int base, char *digits, t_flags flags)
+int	handle_number(unsigned long n, int base, char *digits, t_flags flags)
 {
 	int	total_len;
 
 	total_len = handle_width_alignment(n, base, digits, flags);
 	if (n != 0 || flags.precision == -1)
-	{
-		if(n < 0)
-			ft_putchar('-');
 		ft_putnbr(n, base, digits);
-	}
 	if (flags.left_align)
 		ft_pad(flags.width - total_len, ' ');
 	if (flags.precision == 0 && n == 0)
@@ -110,7 +106,7 @@ int handle_address(va_list args,t_flags flags)
 	ptr = va_arg(args, void *);
 	if(!ptr)
 		return (handle_string("(nil)",flags));
-	n = *(unsigned long *)ptr;
+	n = (unsigned long)ptr;
 	flags.hash = 1;
 	total_len = handle_width_alignment(n,16,"0123456789abcdef",flags);
 	ft_putnbr(n, 16,"0123456789abcdef");
@@ -123,6 +119,19 @@ int handle_address(va_list args,t_flags flags)
 	return (total_len);
 }
 
+int handle_signed_number_specifier(long n,t_flags flags)
+{
+	unsigned long nb;
+
+	if(n < 0)
+	{
+		flags.negative = 1;
+		n = -n;
+	}
+	nb = n;
+	return (handle_number(nb,10,"0123456789",flags));
+}
+
 int	handle_flags(const char **format, va_list args, t_flags flags)
 {
 	if (**format == 's')
@@ -130,7 +139,7 @@ int	handle_flags(const char **format, va_list args, t_flags flags)
 	else if (**format == 'c')
 		return (handle_character(va_arg(args, int), flags));
 	else if (**format == 'd' || **format == 'i')
-		return (handle_number(va_arg(args, int), 10, "0123456789", flags));
+		return (handle_signed_number_specifier(va_arg(args, int),flags));
 	else if (**format == 'u')
 		return (handle_number(va_arg(args, unsigned int), 10, "0123456789",
 				flags));
