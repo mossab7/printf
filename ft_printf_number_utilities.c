@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_printf_number_utilities.c                       :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: mbouhia <marvin@42.fr>                     +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/11/03 20:11:57 by mbouhia           #+#    #+#             */
+/*   Updated: 2024/11/03 20:13:27 by mbouhia          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "ft_printf.h"
 
 void	ft_putnbr(unsigned long n, unsigned int base, char *digits)
@@ -32,8 +44,8 @@ int	num_pad_len(long n, int base, t_flags flags, int *pad)
 	len = ft_numlen(n, base);
 	if (n == 0 && flags.precision >= 0)
 		len = 0;
-	sign = *(int *)ft_ternary((flags.negative || flags.sign || flags.space), &(int){1},
-			&(int){0});
+	sign = *(int *)ft_ternary((flags.negative || flags.sign || flags.space),
+			&(int){1}, &(int){0});
 	prefix = *(int *)ft_ternary((flags.hash && base == 16 && n != 0), &(int){2},
 			&(int){0});
 	*pad = *(int *)ft_ternary((flags.precision > len), &(int){flags.precision

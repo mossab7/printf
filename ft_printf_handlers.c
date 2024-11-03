@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_printf_handlers.c                               :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: mbouhia <marvin@42.fr>                     +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/11/03 20:11:45 by mbouhia           #+#    #+#             */
+/*   Updated: 2024/11/03 20:13:18 by mbouhia          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "ft_printf.h"
 #include <stdio.h>
 #include <unistd.h>
@@ -21,6 +33,7 @@ int	handle_precision_alignment(int total_len, size_t pad, t_flags flags)
 		return (total_len + precision_len);
 	return (total_len);
 }
+
 int	handle_width_alignment(long n, int base, char *digits, t_flags flags)
 {
 	int	total_len;
@@ -29,8 +42,9 @@ int	handle_width_alignment(long n, int base, char *digits, t_flags flags)
 	total_len = num_pad_len(n, base, flags, &pad);
 	if (!flags.left_align)
 	{
-		if (!flags.zero_pad || ((flags.width > flags.precision) && flags.precision >= 0))
-				ft_pad(flags.width - total_len, ' ');
+		if (!flags.zero_pad || ((flags.width > flags.precision)
+				&& flags.precision >= 0))
+			ft_pad(flags.width - total_len, ' ');
 	}
 	if (flags.negative)
 		ft_putchar('-');
@@ -59,19 +73,19 @@ int	handle_number(unsigned long n, int base, char *digits, t_flags flags)
 	return (total_len);
 }
 
-int handle_address(va_list args,t_flags flags)
+int	handle_address(va_list args, t_flags flags)
 {
-	void *ptr;
-	unsigned long n;
-	int  total_len;
+	void			*ptr;
+	unsigned long	n;
+	int				total_len;
 
 	ptr = va_arg(args, void *);
-	if(!ptr)
-		return (handle_string("(nil)",flags));
+	if (!ptr)
+		return (handle_string("(nil)", flags));
 	n = (unsigned long)ptr;
 	flags.hash = 1;
-	total_len = handle_width_alignment(n,16,"0123456789abcdef",flags);
-	ft_putnbr(n, 16,"0123456789abcdef");
+	total_len = handle_width_alignment(n, 16, "0123456789abcdef", flags);
+	ft_putnbr(n, 16, "0123456789abcdef");
 	if (flags.left_align)
 		ft_pad(flags.width - total_len, ' ');
 	if (flags.precision == 0 && n == 0)
@@ -82,17 +96,15 @@ int handle_address(va_list args,t_flags flags)
 	return (total_len);
 }
 
-int handle_signed_number_specifier(long n,t_flags flags)
+int	handle_signed_number_specifier(long n, t_flags flags)
 {
-	unsigned long nb;
+	unsigned long	nb;
 
-	if(n < 0)
+	if (n < 0)
 	{
 		flags.negative = 1;
 		n = -n;
 	}
 	nb = n;
-	return (handle_number(nb,10,"0123456789",flags));
+	return (handle_number(nb, 10, "0123456789", flags));
 }
-
-

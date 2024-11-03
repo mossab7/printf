@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_printf.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: mbouhia <marvin@42.fr>                     +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/11/03 20:11:26 by mbouhia           #+#    #+#             */
+/*   Updated: 2024/11/03 20:11:33 by mbouhia          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "ft_printf.h"
 #include <stdarg.h>
 
@@ -39,6 +51,7 @@ int	handle_character(char c, t_flags flags)
 		ft_pad(flags.width - 1, ' ');
 	return (*(int *)ft_ternary((flags.width > 1), &flags.width, &(int){1}));
 }
+
 int	handle_flags(const char **format, va_list args, t_flags flags)
 {
 	if (**format == 's')
@@ -46,7 +59,7 @@ int	handle_flags(const char **format, va_list args, t_flags flags)
 	else if (**format == 'c')
 		return (handle_character(va_arg(args, int), flags));
 	else if (**format == 'd' || **format == 'i')
-		return (handle_signed_number_specifier(va_arg(args, int),flags));
+		return (handle_signed_number_specifier(va_arg(args, int), flags));
 	else if (**format == 'u')
 		return (handle_number(va_arg(args, unsigned int), 10, "0123456789",
 				flags));
@@ -57,7 +70,7 @@ int	handle_flags(const char **format, va_list args, t_flags flags)
 		return (handle_number(va_arg(args, unsigned int), 16,
 				"0123456789ABCDEF", flags));
 	else if (**format == 'p')
-		return (handle_address(args,flags));
+		return (handle_address(args, flags));
 	else
 		return (handle_error(format));
 	return (0);
@@ -89,7 +102,6 @@ int	ft_printf(const char *format, ...)
 	int		count;
 	va_list	args;
 
-	// int tmp;
 	va_start(args, format);
 	count = 0;
 	while (*format)
@@ -97,10 +109,7 @@ int	ft_printf(const char *format, ...)
 		if (*format == '%')
 		{
 			format++;
-			// tmp = count;
 			count += handle_format(&format, args);
-			// if(tmp > count)
-			//     count++;
 		}
 		else
 			count += ft_putchar(*format);

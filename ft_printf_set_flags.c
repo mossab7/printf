@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_printf_set_flags.c                              :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: mbouhia <marvin@42.fr>                     +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/11/03 20:12:09 by mbouhia           #+#    #+#             */
+/*   Updated: 2024/11/03 20:13:44 by mbouhia          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "ft_printf.h"
 
 void	*ft_memset(void *s, int c, size_t n)
@@ -14,16 +26,16 @@ void	*ft_memset(void *s, int c, size_t n)
 	return (s);
 }
 
-void set_flags(char flag, t_flags *flags)
+void	set_flags(char flag, t_flags *flags)
 {
-    if (flag == '-')
-			flags -> left_align = 1;
+	if (flag == '-')
+		flags->left_align = 1;
 	else if (flag == '0')
-			flags -> zero_pad = 1;
+		flags->zero_pad = 1;
 	else if (flag == '+')
-			flags -> sign = 1;
+		flags->sign = 1;
 	else if (flag == ' ')
-			flags -> space = 1;
+		flags->space = 1;
 	else if (flag == '#')
-			flags -> hash = 1;
+		flags->hash = 1;
 }
