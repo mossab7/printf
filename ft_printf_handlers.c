@@ -65,10 +65,11 @@ int	handle_width_alignment(long n, int base, char *digits, t_flags flags)
 	int	pad;
 
 	total_len = num_pad_len(n, base, flags, &pad);
-	if (!flags.left_align && !flags.zero_pad)
-		ft_pad(flags.width - total_len, ' ');
-	else if (((flags.width > flags.precision) && flags.precision > 0))
-		ft_pad(flags.width - total_len, ' ');
+	if (!flags.left_align)
+	{
+		if (!flags.zero_pad || ((flags.width > flags.precision) && flags.precision > 0))
+				ft_pad(flags.width - total_len, ' ');
+	}
 	if (n < 0)
 		ft_putchar('-');
 	else if (flags.sign)
