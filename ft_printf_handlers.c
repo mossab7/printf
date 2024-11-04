@@ -6,7 +6,7 @@
 /*   By: mbouhia <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/03 20:11:45 by mbouhia           #+#    #+#             */
-/*   Updated: 2024/11/03 20:13:18 by mbouhia          ###   ########.fr       */
+/*   Updated: 2024/11/04 13:29:00 by mbouhia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,10 @@ int	handle_address(va_list args, t_flags flags)
 
 	ptr = va_arg(args, void *);
 	if (!ptr)
+	{
+		flags.precision = 5;
 		return (handle_string("(nil)", flags));
+	}
 	n = (unsigned long)ptr;
 	flags.hash = 1;
 	total_len = handle_width_alignment(n, 16, "0123456789abcdef", flags);
