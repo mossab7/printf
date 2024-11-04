@@ -49,6 +49,6 @@ int		handle_flags(const char **format, va_list args, t_flags flags);
 int		handle_format(const char **format, va_list args);
 int		ft_printf(const char *format, ...);
 int		handle_error(const char **format);
-int		num_pad_len(long n, int base, t_flags flags, int *pad);
+int		num_pad_len(unsigned long n, int base, t_flags flags, int *pad);
 t_flags	handle_conflict(t_flags flgs, const char **format);
 #endif
