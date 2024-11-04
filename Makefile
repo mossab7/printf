@@ -2,7 +2,8 @@
 NAME = libftprintf.a
 
 SRC = ft_printf.c ft_printf_number_utilities.c \
-       ft_printf_handlers.c ft_printf_utilities.c
+       ft_printf_handlers.c ft_printf_utilities.c \
+	   ft_printf_set_flags.c
 
 all: $(NAME)
 
