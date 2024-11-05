@@ -6,7 +6,7 @@
 /*   By: mbouhia <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/03 20:11:26 by mbouhia           #+#    #+#             */
-/*   Updated: 2024/11/05 14:55:03 by mbouhia          ###   ########.fr       */
+/*   Updated: 2024/11/05 16:05:18 by mbouhia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,8 +112,8 @@ int	ft_printf(const char *format, ...)
 		{
 			format++;
 			count += handle_format(&format, args);
-			if(*format == '\0')
-				break;
+			if (*format == '\0')
+				break ;
 		}
 		else
 			count += ft_putchar(*format);
