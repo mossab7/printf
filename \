@@ -1,0 +1,16 @@
+#include <stdio.h>
+#include "ft_printf.h"
+#include <limits.h>
+
+#define fmt "%9ww\n"
+#define value &"char"
+
+int main() 
+{
+	char *ptr = NULL;
+	int j = ft_printf(fmt);
+	int i = printf(fmt);
+	ft_printf("ft_: %d\nor_: %d",j,i);
+    	return 0;
+}
+

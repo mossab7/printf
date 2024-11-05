@@ -22,7 +22,7 @@ $(NAME): $(OBJS)
 	ar rcs ${NAME} ${OBJS}
 
 bonus: $(BONUSOBJS)
-	ar rcs ${NAME} ${OBJS}
+	ar rcs ${NAME} ${BONUSOBJS}
 
 clean:
 	rm -f $(OBJS) $(BONUSOBJS)

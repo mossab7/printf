@@ -6,7 +6,7 @@
 /*   By: mbouhia <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/03 20:11:57 by mbouhia           #+#    #+#             */
-/*   Updated: 2024/11/03 20:13:27 by mbouhia          ###   ########.fr       */
+/*   Updated: 2024/11/05 14:48:00 by mbouhia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,11 +59,13 @@ int	handle_error(const char **format)
 	int	count;
 
 	count = 0;
-	if (**format == '%')
-		return (ft_putchar('%'));
-	while (**format != '%')
+	count += ft_putchar('%');
+	while (**format)
 	{
-		count += ft_putchar(*(*format)++);
+		if(**format == '%')
+			break;
+		count += ft_putchar(**format);
+		(*format)++;
 	}
 	return (count);
 }
